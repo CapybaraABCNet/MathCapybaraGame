@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Math</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #141414, #343434);
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .game-box {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .capybara {
+            font-size: 60px;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .status {
+            background: #f0f8ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #ff3030;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #ff0000;
+        }
+        
+        h1, h3 {
+            color: #000000;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-box">
+        <h1>Mathematical battle with a Dragon</h1>
+        <h1>🧮</h1>
+
+        <h3 id="">Привет! Это игра "Mathematical battle with a Dragon", тут ты должен давать ответы на примеры, и этим самым вы выигравыете, и переходите на следуйщий уровень. Начинаем! Вы увидили маленького эльфа, решите пример чтобы пройти дальше</h3>
+        <pre id="console"></pre>
+        <span class="prompt">></span> <input type="text" id="input" autofocus>
+    </div>
+
+    <script>
+        const consoleEl = document.getElementById('console');
+        const inputEl = document.getElementById('input');
+        
+        let gameState = 'start';
+        
+        function log(message) {
+            consoleEl.textContent += `\n> ${message}`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        function handleInput(event) {
+            if (event.key === 'Enter') {
+                const userInput = inputEl.value.trim();
+                inputEl.value = '';
+                processCommand(userInput);
+            }
+        }
+
+        function processCommand(command) {
+            switch (gameState) {
+                case 'start':
+                    if (command === '175') {
+                        gameState = '2';
+                        log("Вы его победили! Пример правильный,");
+                        log("Вы проходите на второй уровень!");
+                        log("Вы увидели брата Эльфа, он на вас напал, 124 * 7 = ?");
+                    } else {
+                        log("Game Over, Вы проиграли ):, пример не правильный");
+                        return; 
+                    }
+                    break;
+                case "2":
+                    if (command === "868") {
+                        gameState = '3';
+                        log("ВЫ его победили! Пример правильный!");
+                        log("Вы увидили старого Гоблина, он на вас напал: 4840 / 5 = ?");
+                    }
+                    else {
+                        log("Game Over ):");
+                        return;
+                    }
+                    break;
+                case "3":
+                    if (command === "968") {
+                        gameState = "4";
+
+                        log("Вы его победили, пример правильный");
+                        log("");
+                    }
+                    else {
+                        log("Game Over!");
+                        return;
+                    }
+                    break;
+            }
+        }
+
+        inputEl.addEventListener('keydown', handleInput);
+        restartGame();
+
+        function restartGame() {
+            gameState = 'start';
+            consoleEl.textContent = '';
+            
+            log("52 + 123 = ?");
+        }
+    </script>
+</body>
+</html>
